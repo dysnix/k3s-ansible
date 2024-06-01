@@ -2,7 +2,7 @@
 - name: Deploy calico
   include_tasks: calico.yml
   tags: calico
-  when: calico_iface is defined and cilium_iface is not defined
+  when: (calico_iface is defined or calico_cidr is defined) and cilium_iface is not defined
 
 - name: Deploy cilium
   include_tasks: cilium.yml

@@ -15,7 +15,13 @@ spec:
       natOutgoing: {{ calico_natOutgoing | default('Enabled') }}
       nodeSelector: {{ calico_nodeSelector | default('all()') }}
     nodeAddressAutodetectionV4:
-      interface: {{ calico_iface  }}
+      {% if calico_iface is defined and calico_iface != "" and calico_cidr is not defined %}
+      interface: {{ calico_iface }}
+      {% endif %}
+      {% if calico_cidr is defined and calico_cidr != "" %}
+      cidrs:
+      - '{{ calico_cidr }}'
+      {% endif %}
     linuxDataplane: {{ 'BPF' if calico_ebpf else 'Iptables' }}
 
 ---
