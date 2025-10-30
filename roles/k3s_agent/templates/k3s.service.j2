@@ -18,10 +18,14 @@ Delegate=yes
 LimitNOFILE=1048576
 LimitNPROC=infinity
 LimitCORE=infinity
-TasksMax=infinity
 TimeoutStartSec=0
 Restart=always
 RestartSec=5s
+{%- if extra_agent_systemd_settings is defined -%}
+{%- for k, v in extra_agent_systemd_settings.items() -%}
+{{ k }}={{ v }}
+{%- endfor -%}
+{%- endif -%}
 
 [Install]
 WantedBy=multi-user.target

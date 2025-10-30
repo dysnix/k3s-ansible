@@ -19,6 +19,11 @@ TasksMax=infinity
 TimeoutStartSec=0
 Restart=always
 RestartSec=5s
+{%- if extra_server_systemd_settings is defined -%}
+{%- for k, v in extra_server_systemd_settings.items() -%}
+{{ k }}={{ v }}
+{%- endfor -%}
+{%- endif -%}
 
 [Install]
 WantedBy=multi-user.target

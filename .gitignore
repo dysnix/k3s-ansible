@@ -2,3 +2,5 @@
 *.log
 ansible.cfg
 kubeconfig
+.DS_Store
+.vscode
