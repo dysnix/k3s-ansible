@@ -1,0 +1,11 @@
+{
+  "Network": "{{ flannel_network | default('10.42.0.0/16') }}",
+  "EnableIPv6": {{ flannel_ipv6 | default(false) | to_json }},
+  "EnableIPv4": {{ flannel_ipv4 | default(true) | to_json }},
+  "IPv6Network": "{{ flannel_ipv6_network | default('::/0') }}",
+  "Backend": {
+    "Type": "{{ flannel_backend | default('vxlan') }}"{% if flannel_mtu is defined %},
+    "MTU": {{ flannel_mtu }}{% endif %}
+
+  }
+}

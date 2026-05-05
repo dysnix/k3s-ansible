@@ -58,6 +58,24 @@
     - net.bridge.bridge-nf-call-ip6tables
   tags: sysctl
 
+- name: Ensure /etc/rancher/k3s directory exists
+  ansible.builtin.file:
+    path: /etc/rancher/k3s
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+  when: flannel_mtu is defined or flannel_network is defined
+
+- name: Deploy flannel custom configuration
+  ansible.builtin.template:
+    src: flannel-config.json.j2
+    dest: /etc/rancher/k3s/flannel.json
+    owner: root
+    group: root
+    mode: "0644"
+  when: flannel_mtu is defined or flannel_network is defined
+
 - name: Add /usr/local/bin to sudo secure_path
   lineinfile:
     line: 'Defaults    secure_path = {{ secure_path[ansible_os_family] }}'
