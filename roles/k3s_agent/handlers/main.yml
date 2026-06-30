@@ -1,0 +1,8 @@
+---
+- name: Manage k3s service
+  ansible.builtin.systemd:
+    name: k3s-node
+    daemon_reload: true
+    state: restarted
+    enabled: true
+  when: not ansible_check_mode
