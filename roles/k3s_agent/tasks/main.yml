@@ -20,6 +20,18 @@
   include_tasks: http_proxy.yml
   when: proxy_env is defined
 
+- name: Queue k3s service restart for earlier config changes
+  ansible.builtin.debug:
+    msg: K3s agent restart required by earlier changes
+  changed_when: true
+  when: >-
+    (k3s_binary_download_x64 is defined and k3s_binary_download_x64.changed | default(false))
+    or (k3s_binary_download_arm64 is defined and k3s_binary_download_arm64.changed | default(false))
+    or (k3s_binary_download_armhf is defined and k3s_binary_download_armhf.changed | default(false))
+    or (k3s_flannel_config is defined and k3s_flannel_config.changed | default(false))
+    or (k3s_custom_registries_config is defined and k3s_custom_registries_config.changed | default(false))
+  notify: Manage k3s service
+
 - name: Configure the k3s service
   ansible.builtin.template:
     src: "k3s.service.j2"

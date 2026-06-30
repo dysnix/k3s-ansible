@@ -15,3 +15,4 @@
     block: "{{ custom_registries_yaml }}"
     mode: '0600'
     create: true
+  register: k3s_custom_registries_config

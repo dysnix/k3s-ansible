@@ -74,6 +74,7 @@
     owner: root
     group: root
     mode: "0644"
+  register: k3s_flannel_config
   when: flannel_mtu is defined or flannel_network is defined
 
 - name: Add /usr/local/bin to sudo secure_path
